@@ -1,7 +1,7 @@
 # Install required libraries 
 FROM golang:1.11.1-alpine AS builder
 
-RUN apk add --no-cache git=2.18.1-r0 build-base=0.5-r1 && \
+RUN apk add --no-cache git build-base && \
     rm -rf /var/lib/apt/lists/* 
 
 RUN git clone https://github.com/google/jsonnet.git && \
@@ -14,7 +14,7 @@ RUN go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb && \
 # Create image for dashboard generation
 FROM alpine:3.8 
 
-RUN apk add --no-cache libstdc++=6.4.0-r9 ca-certificates
+RUN apk add --no-cache libstdc++ ca-certificates
 
 WORKDIR /dashboards
 
