@@ -2,7 +2,7 @@
 local configMapName = std.extVar('name') + "-grafana-dashboard";
 local dashJson = std.extVar('dashboard');
 
-local dashName = configMapName + "-dashboard.json";
+local dashName = configMapName + ".json";
 
 {
     apiVersion: "v1",
