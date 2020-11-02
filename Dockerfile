@@ -12,6 +12,8 @@ RUN go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb && \
     jb install https://github.com/grafana/grafonnet-lib/grafonnet && \
     jb install https://github.com/thelastpickle/grafonnet-polystat-panel
 
+RUN go get github.com/brancz/gojsontoyaml
+
 # Create image for dashboard generation
 FROM alpine:3.8
 
@@ -21,6 +23,10 @@ WORKDIR /dashboards
 
 COPY --from=builder /go/vendor vendor
 COPY --from=builder /go/jsonnet/jsonnet /usr/local/bin/
+COPY --from=builder /go/bin/gojsontoyaml /usr/local/bin/
+
+COPY configmap.sh configmap.sh
+COPY configmap.jsonnet configmap.jsonnet
 
 ENV JSONNET_PATH=/dashboards/vendor
 CMD [ "jsonnet", "-" ]
